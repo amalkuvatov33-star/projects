@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080d16">
+  <meta name="description" content="Галерея практических работ по SOC и кибербезопасности.">
+  <title>SOC PRACTICAL WORK</title>
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --background: #080d16;
+      --surface: #101927;
+      --border: #26364b;
+      --text: #e8eef7;
+      --muted: #9aabc1;
+      --accent: #55c8ff;
+      --content-width: 1120px;
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(ellipse at 50% -20%, rgba(35, 91, 145, 0.18), transparent 55%),
+        var(--background);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+    }
+
+    .page-shell {
+      width: min(var(--content-width), calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      padding: clamp(60px, 10vw, 110px) 0 48px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 20px;
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+      content: "";
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.4rem, 7vw, 5rem);
+      letter-spacing: -0.055em;
+      line-height: 1.05;
+    }
+
+    .hero-subtitle {
+      margin: 20px 0 0;
+      color: #b6c8dc;
+      font-size: clamp(0.95rem, 2vw, 1.12rem);
+    }
+
+    .hero-description {
+      max-width: 780px;
+      margin: 22px 0 0;
+      color: var(--muted);
+    }
+
+    main {
+      padding: 46px 0 80px;
+    }
+
+    .gallery-heading {
+      margin-bottom: 24px;
+    }
+
+    .gallery-heading h2 {
+      margin: 0;
+      font-size: clamp(1.5rem, 3vw, 1.9rem);
+      letter-spacing: -0.03em;
+    }
+
+    .gallery-heading p {
+      max-width: 750px;
+      margin: 8px 0 0;
+      color: var(--muted);
+    }
+
+    .project-list {
+      display: grid;
+      gap: 24px;
+    }
+
+    .project-card {
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: linear-gradient(145deg, #121d2c, #0d1521);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.16);
+      animation: appear 500ms ease both;
+    }
+
+    .project-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 24px 28px 20px;
+    }
+
+    .project-number {
+      flex: 0 0 auto;
+      padding-top: 3px;
+      color: var(--accent);
+      font-size: 0.87rem;
+      font-weight: 750;
+      letter-spacing: 0.1em;
+    }
+
+    .project-title {
+      margin: 0;
+      font-size: clamp(1.2rem, 2.7vw, 1.55rem);
+      letter-spacing: -0.025em;
+      line-height: 1.35;
+    }
+
+    .project-summary {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .screenshot-frame {
+      margin: 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: #080d14;
+    }
+
+    .screenshot-link {
+      display: block;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /*
+      Замените путь в data на путь к своему изображению.
+      При успешной загрузке object покажет картинку.
+      Если файла пока нет, покажется текст-заполнитель внутри object.
+    */
+    .screenshot-object {
+      display: block;
+      width: 100%;
+      height: clamp(240px, 46vw, 520px);
+      background:
+        linear-gradient(135deg, rgba(85, 200, 255, 0.04), transparent 55%),
+        #080d14;
+      object-fit: contain;
+    }
+
+    .screenshot-fallback {
+      display: grid;
+      width: 100%;
+      height: 100%;
+      min-height: 240px;
+      place-content: center;
+      justify-items: center;
+      gap: 12px;
+      padding: 28px;
+      color: #a4b8ce;
+      text-align: center;
+    }
+
+    .placeholder-icon {
+      display: grid;
+      width: 54px;
+      height: 54px;
+      place-items: center;
+      border: 1px solid #2c4965;
+      border-radius: 14px;
+      background: rgba(85, 200, 255, 0.06);
+      color: var(--accent);
+      font-size: 1.4rem;
+    }
+
+    .placeholder-title {
+      margin: 0;
+      font-weight: 650;
+    }
+
+    .placeholder-path {
+      margin: 0;
+      color: #71859d;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.78rem;
+      overflow-wrap: anywhere;
+    }
+
+    .image-caption {
+      margin: 0;
+      padding: 8px 16px;
+      color: #8396ad;
+      font-size: 0.8rem;
+      text-align: right;
+    }
+
+    .project-details {
+      padding: 24px 28px 28px;
+    }
+
+    .details-heading {
+      margin: 0 0 18px;
+      color: #dfeaf6;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px 30px;
+    }
+
+    .detail-item {
+      min-width: 0;
+    }
+
+    .detail-item--wide {
+      grid-column: 1 / -1;
+    }
+
+    .detail-item h4 {
+      margin: 0 0 5px;
+      color: var(--accent);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    .detail-item p {
+      margin: 0;
+      color: #b6c4d5;
+      font-size: 0.94rem;
+      overflow-wrap: anywhere;
+    }
+
+    .edit-note {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 7px 10px;
+      border: 1px solid rgba(85, 200, 255, 0.18);
+      border-radius: 7px;
+      background: rgba(85, 200, 255, 0.08);
+      color: #a9dff7;
+      font-size: 0.78rem;
+    }
+
+    .footer {
+      padding: 22px 0 32px;
+      border-top: 1px solid var(--border);
+      color: #74869b;
+      font-size: 0.82rem;
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 680px) {
+      .page-shell {
+        width: min(100% - 28px, var(--content-width));
+      }
+
+      .hero {
+        padding-top: 54px;
+        padding-bottom: 36px;
+      }
+
+      .project-header {
+        gap: 12px;
+        padding: 20px 18px 16px;
+      }
+
+      .project-details {
+        padding: 21px 18px 24px;
+      }
+
+      .detail-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .detail-item--wide {
+        grid-column: auto;
+      }
+
+      .image-caption {
+        text-align: left;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="hero">
+    <div class="page-shell">
+      <p class="eyebrow">Журнал практических работ</p>
+      <h1>SOC PRACTICAL WORK</h1>
+      <p class="hero-subtitle">Практика | Мониторинг безопасности | SIEM | Расследование событий</p>
+      <p class="hero-description">
+        Здесь собраны практические работы по кибербезопасности: настройка SIEM,
+        анализ событий безопасности Windows, мониторинг и расследование.
+      </p>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <section aria-labelledby="gallery-title">
+      <div class="gallery-heading">
+        <h2 id="gallery-title">Галерея практических работ</h2>
+       
+      </div>
+
+      <div class="project-list">
+
+
+        <!-- КАРТОЧКА 02 -->
+
+        <article class="project-card">
+  <header class="project-header">
+    <span class="project-number">01</span>
+    <div>
+      <h3 class="project-title">Wazuh Agent Deployment</h3>
+      <p class="project-summary">Установка, настройка и подключение Windows Agent к Wazuh Manager.</p>
+    </div>
+  </header>
+
+  <figure class="screenshot-frame">
+    <a class="screenshot-link" href="assets/images/project-02.png" target="_blank" rel="noopener">
+      <object class="screenshot-object" data="assets/images/project-02.png" type="image/png" aria-label="Скриншот подключения Wazuh Agent">
+        <span class="screenshot-fallback">
+          <span class="placeholder-icon" aria-hidden="true">▧</span>
+          <span class="placeholder-title">Скриншот будет добавлен</span>
+          <span class="placeholder-path">assets/images/project-02.png</span>
+        </span>
+      </object>
+    </a>
+    <figcaption class="image-caption">Подтверждение подключения Windows Agent к Wazuh Manager</figcaption>
+  </figure>
+
+  <div class="project-details">
+    <h4 class="details-heading">Описание работы</h4>
+
+    <div class="detail-grid">
+      <section class="detail-item">
+        <h4>Цель</h4>
+        <p>
+          Развернуть Windows Agent и подключить его к Wazuh Manager для централизованного
+          сбора системных событий и событий безопасности Windows. Проверить доступность
+          менеджера, работоспособность агента и успешность установки соединения.
+        </p>
+      </section>
+
+      <section class="detail-item">
+        <h4>Среда</h4>
+        <p>
+          ОС: Windows 11.<br>
+          SIEM: Wazuh 4.14.8.<br>
+          Лабораторная инфраструктура: VirtualBox.<br>
+          Windows IP: 192.168.1.9.<br>
+          Wazuh Manager IP: 192.168.1.3.<br>
+          Порт подключения: TCP 1514.<br>
+          Сетевой интерфейс: Ethernet.
+        </p>
+      </section>
+
+      <section class="detail-item">
+        <h4>Инструменты</h4>
+        <p>
+          Wazuh Manager — централизованный сбор и анализ событий.<br>
+          Wazuh Windows Agent — передача событий с Windows.<br>
+          Windows PowerShell — управление службой и диагностика подключения.<br>
+          Test-NetConnection — проверка доступности TCP-порта.<br>
+          Select-String — проверка состояния агента в файле.<br>
+          ossec.conf — конфигурация Windows Agent.
+        </p>
+      </section>
+
+      <section class="detail-item">
+        <h4>Процесс</h4>
+        <p>
+          1. Установлен Wazuh Windows Agent на локальный компьютер.<br>
+          2. В ossec.conf указан IP-адрес Wazuh Manager.<br>
+          3. Перезапущена служба агента командой Restart-Service WazuhSvc.<br>
+          4. Проверено сетевое соединение командой Test-NetConnection 192.168.1.3 -Port 1514.<br>
+          5. Проверен статус агента в wazuh-agent.state с помощью Select-String.
+        </p>
+      </section>
+
+      <section class="detail-item detail-item--wide">
+        <h4>Анализ</h4>
+        <p>
+          В результате сетевой проверки получено значение TcpTestSucceeded: True,
+          подтверждающее успешное TCP-соединение с Wazuh Manager на порту 1514.
+          Адрес источника соединения — 192.168.1.9, адрес назначения — 192.168.1.3.
+          В файле состояния агента обнаружено значение status='connected'.
+          Дополнительно в Wazuh Dashboard отображается агент amal с ID 001
+          и статусом Active. Полученные результаты подтверждают успешное подключение
+          Windows Agent к Wazuh Manager.
+        </p>
+      </section>
+
+      <section class="detail-item detail-item--wide">
+        <h4>Вывод</h4>
+        <p>
+          Windows Agent успешно подключён к Wazuh Manager. Проверены сетевой доступ
+          к серверу, доступность TCP-порта 1514 и состояние подключения агента.
+          Получен практический опыт установки и настройки Wazuh Agent, работы
+          с конфигурационным файлом ossec.conf и диагностики соединения
+          с помощью Windows PowerShell. Подготовлена лабораторная среда
+          для дальнейшего мониторинга событий безопасности Windows.
+        </p>
+      </section>
+    </div>
+
+    <span class="edit-note">Практическая работа выполнена в собственной лабораторной среде.</span>
+  </div>
+</article>
+
+        <!-- КАРТОЧКА 03 -->
+<article class="project-card">
+  <header class="project-header">
+    <span class="project-number">02</span>
+    <div>
+      <h3 class="project-title">SIEM Wazuh — Windows Event Analysis (4688)</h3>
+      <p class="project-summary">Просмотр и анализ событий создания процессов Windows через Wazuh SIEM.</p>
+    </div>
+  </header>
+
+  <figure class="screenshot-frame">
+    <a class="screenshot-link" href="assets/images/project-03.png" target="_blank" rel="noopener">
+      <object class="screenshot-object" data="assets/images/project-03.png" type="image/png" aria-label="Анализ события создания процесса 4688">
+        <span class="screenshot-fallback">
+          <span class="placeholder-icon" aria-hidden="true">▧</span>
+          <span class="placeholder-title">Скриншот будет добавлен</span>
+          <span class="placeholder-path">assets/images/project-03.png</span>
+        </span>
+      </object>
+    </a>
+    <figcaption class="image-caption">Детали события Windows Security Event ID 4688 в Wazuh Dashboard</figcaption>
+  </figure>
+
+  <div class="project-details">
+    <h4 class="details-heading">Описание работы</h4>
+    <div class="detail-grid">
+
+      <section class="detail-item">
+        <h4>Цель</h4>
+        <p>
+          Изучить механизм регистрации создания процессов в Windows и научиться
+          анализировать соответствующие события безопасности через Wazuh SIEM.
+          Определить, какой процесс был запущен, каким процессом он был вызван
+          и от имени какой учётной записи выполнялось действие.
+        </p>
+      </section>
+
+      <section class="detail-item">
+        <h4>Среда</h4>
+        <p>
+          ОС: Windows 10 Home 22H2.<br>
+          SIEM: Wazuh 4.14.8.<br>
+          Источник событий: Windows Security.<br>
+          Event ID: 4688.<br>
+          Windows Agent: amal (ID 001).<br>
+          Лабораторная инфраструктура: VirtualBox.
+        </p>
+      </section>
+
+      <section class="detail-item">
+        <h4>Инструменты</h4>
+        <p>
+          Wazuh Dashboard — просмотр и анализ событий безопасности.<br>
+          Wazuh Windows Agent — передача событий на менеджер.<br>
+          Windows Event Viewer — проверка системных журналов.<br>
+          Windows Security Audit — регистрация создания процессов.<br>
+          MITRE ATT&CK — справочник для классификации потенциально подозрительной активности.
+        </p>
+      </section>
+
+      <section class="detail-item">
+        <h4>Процесс</h4>
+        <p>
+          1. Открыт раздел Threat Hunting в Wazuh Dashboard.<br>
+          2. Найдено событие Windows Security с Event ID 4688.<br>
+          3. Изучены сведения о новом процессе и родительском процессе.<br>
+          4. Проверены идентификаторы процессов (PID), учётная запись и домен.<br>
+          5. Проанализирована связь между родительским и созданным процессами.
+        </p>
+      </section>
+
+      <section class="detail-item detail-item--wide">
+        <h4>Анализ</h4>
+        <p>
+          В исследуемом событии зарегистрировано создание процесса
+          SearchProtocolHost.exe, расположенного в C:\Windows\System32.
+          В качестве родительского процесса указан SearchIndexer.exe.
+          Оба процесса относятся к компонентам Windows Search.
+          В событии также указаны имя пользователя amal, домен DENIS,
+          идентификаторы процессов и SID учётной записи.
+          Наблюдаемая связь процессов соответствует работе службы поиска Windows.
+          Само по себе событие 4688 не свидетельствует о вредоносной активности.
+        </p>
+      </section>
+
+      <section class="detail-item detail-item--wide">
+        <h4>Вывод</h4>
+        <p>
+          Изучено событие Windows Security Event ID 4688 и подтверждена его
+          передача в Wazuh SIEM. Получен практический опыт анализа создания
+          процессов, определения родительского процесса, изучения PID
+          и сопоставления активности с учётной записью пользователя.
+          Понимание этих полей помогает SOC-аналитику оценивать контекст
+          запуска процессов и выявлять потенциально подозрительную активность.
+        </p>
+      </section>
+
+    </div>
+    <span class="edit-note">Практическая работа выполнена в собственной лабораторной среде.</span>
+  </div>
+</article>
+        
+
+        <!-- КАРТОЧКА 04 -->
+<article class="project-card">
+  <header class="project-header">
+    <span class="project-number">03</span>
+    <div>
+      <h3 class="project-title">Custom Wazuh Detection Rule — Event ID 4625</h3>
+      <p class="project-summary">Создание пользовательского правила для обнаружения неудачных попыток входа в Windows.</p>
+    </div>
+  </header>
+
+  <figure class="screenshot-frame">
+    <a class="screenshot-link" href="assets/images/project-04.png" target="_blank" rel="noopener">
+      <object class="screenshot-object" data="assets/images/project-04.png" type="image/png" aria-label="Конфигурация пользовательского правила Wazuh">
+        <span class="screenshot-fallback">
+          <span class="placeholder-icon" aria-hidden="true">▧</span>
+          <span class="placeholder-title">Скриншот будет добавлен</span>
+          <span class="placeholder-path">assets/images/project-04.png</span>
+        </span>
+      </object>
+    </a>
+    <figcaption class="image-caption">Конфигурация пользовательского правила 100100 в local_rules.xml</figcaption>
+  </figure>
+
+  <div class="project-details">
+    <h4 class="details-heading">Описание работы</h4>
+
+    <div class="detail-grid">
+
+      <section class="detail-item">
+        <h4>Цель</h4>
+        <p>
+          Создать собственное правило обнаружения в Wazuh SIEM для обработки
+          события Windows Security Event ID 4625. Настроить отдельный уровень
+          важности алерта и проверить работу пользовательского правила
+          на реальном событии из лабораторной Windows-системы.
+        </p>
+      </section>
+
+      <section class="detail-item">
+        <h4>Среда</h4>
+        <p>
+          ОС: Windows 10 Home 22H2.<br>
+          SIEM: Wazuh 4.14.8.<br>
+          Сервер: Wazuh Manager.<br>
+          Агент: amal (ID 001).<br>
+          Источник события: Windows Security.<br>
+          Конфигурационный файл: /var/ossec/etc/rules/local_rules.xml.<br>
+          Событие: Event ID 4625.
+        </p>
+      </section>
+
+      <section class="detail-item">
+        <h4>Инструменты</h4>
+        <p>
+          Wazuh Manager — обработка событий и применение правил.<br>
+          Wazuh Dashboard — просмотр и проверка алертов.<br>
+          local_rules.xml — создание пользовательского правила.<br>
+          Nano — редактирование конфигурационного файла.<br>
+          wazuh-analysisd — проверка корректности конфигурации.<br>
+          systemctl — перезапуск службы Wazuh Manager.
+        </p>
+      </section>
+
+      <section class="detail-item">
+        <h4>Процесс</h4>
+        <p>
+          1. Найдено стандартное правило Wazuh с ID 60105, обрабатывающее
+          события неудачного входа Windows, включая Event ID 4625.<br>
+          2. Открыт файл /var/ossec/etc/rules/local_rules.xml.<br>
+          3. Внутри группы local создано пользовательское правило с ID 100100.<br>
+          4. Добавлено условие &lt;if_sid&gt;60105&lt;/if_sid&gt;,
+          связывающее пользовательское правило со стандартным.<br>
+          5. Установлен уровень важности level="10".<br>
+          6. Добавлены описание и группы windows, authentication_failed
+          и custom_alert.<br>
+          7. Выполнена проверка конфигурации командой wazuh-analysisd -t,
+          после чего перезапущен Wazuh Manager.<br>
+          8. Проверено срабатывание правила на событии 4625.
+        </p>
+      </section>
+
+      <section class="detail-item detail-item--wide">
+        <h4>Анализ</h4>
+        <p>
+          После настройки и тестирования Wazuh успешно обработал событие
+          Windows Security Event ID 4625. В деталях алерта отображается
+          пользовательское правило 100100 с уровнем важности 10.
+          Описание алерта: Windows Security: Failed Logon Attempt
+          (Event ID 4625). В группах указаны windows,
+          authentication_failed и custom_alert.
+          Результат подтверждает, что пользовательское правило было загружено
+          менеджером и успешно применено к соответствующему событию.
+        </p>
+      </section>
+
+      <section class="detail-item detail-item--wide">
+        <h4>Вывод</h4>
+        <p>
+          Создано и протестировано пользовательское правило Wazuh
+          для обнаружения неудачных попыток входа в Windows.
+          Изучена связь между стандартными и пользовательскими правилами
+          через механизм if_sid. Получен практический опыт редактирования
+          local_rules.xml, настройки уровня важности алерта, проверки
+          конфигурации и тестирования обнаружения.
+          Результат подтвердил возможность расширения стандартных
+          механизмов обнаружения Wazuh под задачи мониторинга SOC.
+        </p>
+      </section>
+
+    </div>
+
+    <span class="edit-note">Практическая работа выполнена и проверена в собственной лабораторной среде.</span>
+  </div>
+</article>
+
+        <!-- КАРТОЧКА 05 -->
+<article class="project-card">
+  <header class="project-header">
+    <span class="project-number">04</span>
+    <div>
+      <h3 class="project-title">Failed Logon Analysis (Event ID 4625)</h3>
+      <p class="project-summary">Анализ неудачной попытки входа в Windows с использованием Wazuh SIEM и Windows Security Logs.</p>
+    </div>
+  </header>
+
+  <figure class="screenshot-frame">
+    <a class="screenshot-link" href="assets/images/project-05.png" target="_blank" rel="noopener">
+      <object class="screenshot-object" data="assets/images/project-05.png" type="image/png" aria-label="Скриншот анализа события 4625">
+        <span class="screenshot-fallback"><span class="placeholder-icon" aria-hidden="true">▧</span><span class="placeholder-title">Скриншот будет добавлен</span><span class="placeholder-path">assets/images/project-05.png</span></span>
+      </object>
+    </a>
+    <figcaption class="image-caption">Событие Windows Security Event ID 4625 — неудачная попытка входа</figcaption>
+  </figure>
+
+  <div class="project-details">
+    <h4 class="details-heading">Описание работы</h4>
+    <div class="detail-grid">
+      <section class="detail-item">
+        <h4>Цель</h4>
+        <p>Изучить событие 4625, определить причину неудачной аутентификации и научиться анализировать связанные с ним поля в Windows Security Logs.</p>
+      </section>
+
+      <section class="detail-item">
+        <h4>Среда</h4>
+        <p>Windows 10 Home 22H2, Wazuh 4.14.8, Windows Security Event Log. Анализ события, полученного от Windows Agent.</p>
+      </section>
+
+      <section class="detail-item">
+        <h4>Инструменты</h4>
+        <p>Windows Event Viewer, Wazuh Dashboard, Windows Security Logs, XML Event Data, PowerShell.</p>
+      </section>
+
+      <section class="detail-item">
+        <h4>Процесс</h4>
+        <p>Изучено событие 4625 в журнале Security. Проверены идентификаторы пользователя, тип входа, процесс аутентификации, коды ошибки и временная метка. Полученные данные сопоставлены с информацией в Wazuh.</p>
+      </section>
+
+      <section class="detail-item detail-item--wide">
+        <h4>Анализ</h4>
+        <p>
+          Event ID: 4625 — неудачная попытка входа.<br>
+          Computer: Denis.<br>
+          Subject: DENIS$ (WORKGROUP).<br>
+          Logon Type: 2 — интерактивный вход.<br>
+          Logon Process: User32.<br>
+          Status: 0xc000006d — ошибка аутентификации.<br>
+          SubStatus: 0xc0000380 — дополнительный код ошибки.<br>
+          Event Record ID: 196851.
+        </p>
+        <p>TargetUserName и TargetDomainName в представленном событии не заполнены. IP-адрес в этом XML также отсутствует, поэтому определить удалённый источник попытки входа по этим данным нельзя.</p>
+      </section>
+
+      <section class="detail-item detail-item--wide">
+        <h4>Вывод</h4>
+        <p>Событие 4625 позволяет выявлять неудачные попытки аутентификации и исследовать контекст входа. В данном случае зафиксирован интерактивный тип входа, однако данных недостаточно, чтобы установить целевую учётную запись или подтвердить удалённую атаку. Для дальнейшего расследования необходимо сопоставить событие с соседними событиями входа и данными Wazuh.</p>
+      </section>
+    </div>
+    <span class="edit-note">Практический анализ Windows Security Event ID 4625.</span>
+  </div>
+</article>
+
+        <!-- КАРТОЧКА 06 -->
+<!-- КАРТОЧКА 06 -->
+<article class="project-card">
+  <header class="project-header">
+    <span class="project-number">05</span>
+    <div>
+      <h3 class="project-title">Windows Security Configuration Assessment & Remediation</h3>
+      <p class="project-summary">Проверка настроек безопасности Windows по CIS Benchmark и анализ параметров системной конфигурации.</p>
+    </div>
+  </header>
+
+  <figure class="screenshot-frame">
+    <a class="screenshot-link" href="assets/images/project-06.png" target="_blank" rel="noopener">
+      <object class="screenshot-object" data="assets/images/project-06.png" type="image/png" aria-label="Скриншот проверки конфигурации Windows">
+        <span class="screenshot-fallback"><span class="placeholder-icon" aria-hidden="true">▧</span><span class="placeholder-title">Скриншот будет добавлен</span><span class="placeholder-path">assets/images/project-06.png</span></span>
+      </object>
+    </a>
+    <figcaption class="image-caption">Wazuh Configuration Assessment и проверка системных параметров Windows через PowerShell</figcaption>
+  </figure>
+
+  <div class="project-details">
+    <h4 class="details-heading">Описание работы</h4>
+    <div class="detail-grid">
+
+      <section class="detail-item">
+        <h4>Цель</h4>
+        <p>Оценить уровень защищённости конфигурации Windows, выявить несоответствия рекомендациям CIS Benchmark и изучить способы проверки и корректировки системных настроек.</p>
+      </section>
+
+      <section class="detail-item">
+        <h4>Среда</h4>
+        <p>Windows 10 Home 22H2, Wazuh 4.14.8, CIS Microsoft Windows 11 Enterprise Benchmark v3.0.0.</p>
+      </section>
+
+      <section class="detail-item">
+        <h4>Инструменты</h4>
+        <p>Wazuh Configuration Assessment (SCA), PowerShell, Windows Registry, утилита secedit, команды reg query.</p>
+      </section>
+
+      <section class="detail-item">
+        <h4>Процесс</h4>
+        <p>Выполнено сканирование конфигурации Windows с помощью CIS Benchmark. Изучены проверки парольной политики, блокировки учётных записей и системных параметров реестра. Для дополнительной проверки значений использовались PowerShell и reg query.</p>
+      </section>
+
+      <section class="detail-item detail-item--wide">
+        <h4>Анализ</h4>
+        <p>
+          Результаты сканирования Wazuh:<br>
+          Passed: 116 проверок.<br>
+          Failed: 357 проверок.<br>
+          Not applicable: 9 проверок.<br>
+          Общая оценка: 24%.
+        </p>
+        <p>
+          Среди выявленных несоответствий изучены настройки истории паролей, минимального срока действия пароля, минимальной длины пароля и блокировки учётной записи. Дополнительно проверено значение AddPrinterDrivers в разделе реестра LanMan Print Services.
+        </p>
+        <p>Результаты PowerShell использовались для проверки фактических значений системной конфигурации и сопоставления их с требованиями CIS Benchmark.</p>
+      </section>
+
+      <section class="detail-item detail-item--wide">
+        <h4>Вывод</h4>
+        <p>Практика позволила изучить процесс оценки безопасности Windows с помощью Wazuh SCA, интерпретацию результатов Passed и Failed, а также проверку системных параметров через PowerShell и реестр. Выявленные несоответствия дают основу для дальнейшей корректировки конфигурации и повторного сканирования для проверки результата.</p>
+      </section>
+
+    </div>
+    <span class="edit-note">Практическая работа: CIS Benchmark, Wazuh SCA и проверка конфигурации Windows.</span>
+  </div>
+</article>
+
+        <!-- КАРТОЧКА 07 -->
+<!-- КАРТОЧКА 07 -->
+<article class="project-card">
+  <header class="project-header">
+    <span class="project-number">06</span>
+    <div>
+      <h3 class="project-title">MITRE ATT&amp;CK Framework Analysis</h3>
+      <p class="project-summary">Изучение тактик и техник MITRE ATT&amp;CK и их применение при анализе событий безопасности в Wazuh.</p>
+    </div>
+  </header>
+
+  <figure class="screenshot-frame">
+    <a class="screenshot-link" href="assets/images/project-07.png" target="_blank" rel="noopener">
+      <object class="screenshot-object" data="assets/images/project-07.png" type="image/png" aria-label="Скриншот изучения MITRE ATT&CK">
+        <span class="screenshot-fallback"><span class="placeholder-icon" aria-hidden="true">▧</span><span class="placeholder-title">Скриншот будет добавлен</span><span class="placeholder-path">assets/images/project-07.png</span></span>
+      </object>
+    </a>
+    <figcaption class="image-caption">Изучение техник MITRE ATT&amp;CK и их отображения в Wazuh</figcaption>
+  </figure>
+
+  <div class="project-details">
+    <h4 class="details-heading">Описание работы</h4>
+    <div class="detail-grid">
+
+      <section class="detail-item">
+        <h4>Цель</h4>
+        <p>Изучить структуру MITRE ATT&amp;CK, основные тактики и техники, а также понять, как использовать эту базу знаний при расследовании событий безопасности.</p>
+      </section>
+
+      <section class="detail-item">
+        <h4>Среда</h4>
+        <p>Лабораторная инфраструктура Windows 10 Home 22H2 и Wazuh 4.14.8 с подключённым Windows Agent.</p>
+      </section>
+
+      <section class="detail-item">
+        <h4>Инструменты</h4>
+        <p>MITRE ATT&amp;CK Knowledge Base, Wazuh Dashboard, Windows Event Viewer, Windows Security Logs.</p>
+      </section>
+
+      <section class="detail-item">
+        <h4>Процесс</h4>
+        <p>Изучены основные тактики и техники ATT&amp;CK. Рассмотрены идентификаторы техник, их описание и связь с поведением, которое может наблюдаться в системных событиях. Отдельное внимание уделено отображению MITRE ID в оповещениях Wazuh.</p>
+      </section>
+
+      <section class="detail-item detail-item--wide">
+        <h4>Анализ</h4>
+        <p>
+          Изучены следующие направления ATT&amp;CK:<br>
+          Persistence — закрепление в системе.<br>
+          Privilege Escalation — повышение привилегий.<br>
+          Defense Evasion — обход защитных механизмов.<br>
+          Initial Access — первоначальный доступ.<br>
+          Discovery — сбор информации о системе.
+        </p>
+        <p>Рассмотрена связь техник с событиями Windows, включая 4624, 4625 и 4688, а также отображение идентификаторов MITRE ATT&amp;CK в правилах и оповещениях Wazuh.</p>
+      </section>
+
+      <section class="detail-item detail-item--wide">
+        <h4>Вывод</h4>
+        <p>MITRE ATT&amp;CK помогает классифицировать наблюдаемое поведение, связывать отдельные события безопасности с возможными действиями злоумышленника и лучше понимать контекст обнаружений SIEM. Полученные знания применяются для структурирования анализа и первичной оценки оповещений в рамках SOC L1.</p>
+      </section>
+
+    </div>
+    <span class="edit-note">Практическая работа: изучение MITRE ATT&amp;CK и сопоставление техник с событиями Windows.</span>
+  </div>
+</article>
+
+        <!-- КАРТОЧКА 08 -->
+  <!-- КАРТОЧКА 08 -->
+<article class="project-card">
+  <header class="project-header">
+    <span class="project-number">07</span>
+    <div>
+      <h3 class="project-title">Windows Registry &amp; Audit Policy Analysis</h3>
+      <p class="project-summary">Изучение реестра Windows и настройка политик аудита для мониторинга системных событий.</p>
+    </div>
+  </header>
+
+  <figure class="screenshot-frame">
+    <a class="screenshot-link" href="assets/images/project-08.png" target="_blank" rel="noopener">
+      <object class="screenshot-object" data="assets/images/project-08.png" type="image/png" aria-label="Скриншот работы с реестром и аудитом Windows">
+        <span class="screenshot-fallback"><span class="placeholder-icon" aria-hidden="true">▧</span><span class="placeholder-title">Скриншот будет добавлен</span><span class="placeholder-path">assets/images/project-08.png</span></span>
+      </object>
+    </a>
+    <figcaption class="image-caption">Проверка политик аудита Windows и исследование параметров системного реестра через PowerShell</figcaption>
+  </figure>
+
+  <div class="project-details">
+    <h4 class="details-heading">Описание работы</h4>
+    <div class="detail-grid">
+
+      <section class="detail-item">
+        <h4>Цель</h4>
+        <p>Изучить механизмы аудита Windows, научиться управлять регистрацией событий безопасности и исследовать системные параметры, хранящиеся в реестре.</p>
+      </section>
+
+      <section class="detail-item">
+        <h4>Среда</h4>
+        <p>Windows 10 Home 22H2, локальная конфигурация политик безопасности Windows, журнал Security.</p>
+      </section>
+
+      <section class="detail-item">
+        <h4>Инструменты</h4>
+        <p>Windows Audit Policy, Advanced Audit Policy Configuration, Windows Event Viewer, PowerShell, Windows Registry, команда reg query.</p>
+      </section>
+
+      <section class="detail-item">
+        <h4>Процесс</h4>
+        <p>Изучены категории и подкатегории аудита Windows. Для отдельных политик настроена регистрация успешных и неуспешных операций. Дополнительно исследованы разделы реестра, связанные с конфигурацией служб печати. Для получения значений использовались команды reg query в PowerShell.</p>
+      </section>
+
+      <section class="detail-item detail-item--wide">
+        <h4>Анализ</h4>
+        <p>
+          Изучены и настроены следующие параметры аудита:<br>
+          Audit Policy Change — Success и Failure.<br>
+          Authentication Policy Change — Success.<br>
+          Security Group Management — Success и Failure.<br>
+          User Account Management — Success и Failure.
+        </p>
+        <p>
+          Также исследованы параметры реестра Windows:
+          <br>
+          HKLM\SYSTEM\CurrentControlSet\Control\Print\Providers\LanMan Print Services\Servers
+          <br>
+          AddPrinterDrivers — REG_DWORD, значение 0x0.
+        </p>
+        <p>
+          Дополнительно проверены значения в разделе Print\Providers, включая EventLog, NetPopup, NetPopupToComputer и параметры порядка провайдеров.
+        </p>
+        <p>Команда reg query использовалась для чтения и проверки текущих значений, без изменения параметров реестра.</p>
+      </section>
+
+      <section class="detail-item detail-item--wide">
+        <h4>Вывод</h4>
+        <p>Практика помогла понять, как политики аудита определяют регистрацию действий в Windows, а реестр хранит системные настройки. Полученные знания применялись для настройки журналирования, проверки конфигурации и последующего анализа событий в Event Viewer и Wazuh SIEM.</p>
+      </section>
+
+    </div>
+    <span class="edit-note">Практическая работа: Windows Audit Policy, Event Viewer и исследование системного реестра.</span>
+  </div>
+</article>
+
+        <!-- КАРТОЧКА 09 -->
+<!-- КАРТОЧКА 09 -->
+<article class="project-card">
+  <header class="project-header">
+    <span class="project-number">09</span>
+    <div>
+      <h3 class="project-title">Wazuh SIEM Administration via Linux</h3>
+      <p class="project-summary">Управление компонентами Wazuh SIEM через Linux: контроль служб, ресурсов системы и конфигурационных файлов.</p>
+    </div>
+  </header>
+
+  <figure class="screenshot-frame">
+    <a class="screenshot-link" href="assets/images/project-09.png" target="_blank" rel="noopener">
+      <object class="screenshot-object" data="assets/images/project-09.png" type="image/png" aria-label="Скриншот управления Wazuh через Linux">
+        <span class="screenshot-fallback"><span class="placeholder-icon" aria-hidden="true">▧</span><span class="placeholder-title">Скриншот будет добавлен</span><span class="placeholder-path">assets/images/project-09.png</span></span>
+      </object>
+    </a>
+    <figcaption class="image-caption">Проверка состояния Wazuh Indexer, использование системных ресурсов и работа с конфигурацией через Linux</figcaption>
+  </figure>
+
+  <div class="project-details">
+    <h4 class="details-heading">Описание работы</h4>
+    <div class="detail-grid">
+
+      <section class="detail-item">
+        <h4>Цель</h4>
+        <p>Изучить администрирование SIEM-инфраструктуры Wazuh через Linux, научиться контролировать состояние сервисов, проверять использование дискового пространства и работать с конфигурационными файлами.</p>
+      </section>
+
+      <section class="detail-item">
+        <h4>Среда</h4>
+        <p>Kali Linux и виртуальная машина Wazuh Server, Wazuh 4.14.8, Linux-среда с systemd.</p>
+      </section>
+
+      <section class="detail-item">
+        <h4>Инструменты</h4>
+        <p>Linux Terminal, systemctl, df -h, sudo, nano, Wazuh Indexer, конфигурационный файл ossec.conf.</p>
+      </section>
+
+      <section class="detail-item">
+        <h4>Процесс</h4>
+        <p>Проверено состояние службы wazuh-indexer с помощью systemctl status. Изучены её статус выполнения, PID и потребление ресурсов. С помощью df -h проверено использование дискового пространства корневого раздела. Открыт конфигурационный файл /var/ossec/etc/ossec.conf для изучения и настройки параметров Wazuh.</p>
+      </section>
+
+      <section class="detail-item detail-item--wide">
+        <h4>Анализ</h4>
+        <p>
+          Wazuh Indexer: active (running).<br>
+          Main PID: 2057.<br>
+          Использование памяти службой: 4.6 GB.<br>
+          Корневой раздел: 25 GB.<br>
+          Использовано: 19 GB.<br>
+          Свободно: 6.8 GB.<br>
+          Занято: 73%.
+        </p>
+        <p>Полученные данные позволили проверить работоспособность Indexer и оценить состояние дискового пространства сервера. Также изучена структура конфигурационного файла ossec.conf.</p>
+      </section>
+
+      <section class="detail-item detail-item--wide">
+        <h4>Вывод</h4>
+        <p>Практика позволила освоить базовые задачи администрирования Wazuh через Linux: контроль состояния SIEM-компонентов, мониторинг системных ресурсов и работу с конфигурацией. Эти навыки помогают поддерживать работоспособность SIEM-инфраструктуры и диагностировать возможные проблемы.</p>
+      </section>
+
+    </div>
+    <span class="edit-note">Практическая работа: Linux administration, Wazuh Indexer и SIEM configuration management.</span>
+  </div>
+</article>
+        <!-- КАРТОЧКА 10 -->
+ <!-- КАРТОЧКА 10 -->
+<article class="project-card">
+  <header class="project-header">
+    <span class="project-number">9</span>
+    <div>
+      <h3 class="project-title">Network Monitoring Automation with Python</h3>
+      <p class="project-summary">Разработка Python-скрипта для автоматизированного сбора и обработки информации о сетевых интерфейсах, соединениях и процессах.</p>
+    </div>
+  </header>
+
+  <figure class="screenshot-frame">
+    <a class="screenshot-link" href="assets/images/project-10.png" target="_blank" rel="noopener">
+      <object class="screenshot-object" data="assets/images/project-10.png" type="image/png" aria-label="Скриншот Python-автоматизации">
+        <span class="screenshot-fallback"><span class="placeholder-icon" aria-hidden="true">▧</span><span class="placeholder-title">Скриншот будет добавлен</span><span class="placeholder-path">assets/images/project-10.png</span></span>
+      </object>
+    </a>
+    <figcaption class="image-caption">Разработка Python-скрипта для сбора сетевой информации с использованием библиотеки psutil</figcaption>
+  </figure>
+
+  <div class="project-details">
+    <h4 class="details-heading">Описание работы</h4>
+    <div class="detail-grid">
+
+      <section class="detail-item">
+        <h4>Цель</h4>
+        <p>Изучить основы автоматизации задач системного и сетевого мониторинга с помощью Python. Создать скрипт, который собирает техническую информацию о сетевых интерфейсах, соединениях и связанных с ними процессах.</p>
+      </section>
+
+      <section class="detail-item">
+        <h4>Среда</h4>
+        <p>Python 3, операционная система Windows/Linux, локальная лабораторная среда.</p>
+      </section>
+
+      <section class="detail-item">
+        <h4>Инструменты</h4>
+        <p>Python, psutil, argparse, csv, json, socket, collections, datetime, pathlib.</p>
+      </section>
+
+      <section class="detail-item">
+        <h4>Процесс</h4>
+        <p>Разрабатывается скрипт для автоматизированного получения статистики сетевых интерфейсов и информации об активных сетевых соединениях. Реализована обработка PID, определение имён процессов, протоколов TCP/UDP и состояний соединений. Предусмотрена обработка ошибок доступа к системной информации.</p>
+      </section>
+
+      <section class="detail-item detail-item--wide">
+        <h4>Анализ</h4>
+        <p>
+          Используется библиотека psutil для получения системной и сетевой информации:
+          <br>
+          Network Interfaces — статистика отправленных и полученных байтов и пакетов.
+          <br>
+          Network Connections — информация о сетевых соединениях.
+          <br>
+          PID — идентификаторы процессов.
+          <br>
+          Process Name — имена процессов, связанных с соединениями.
+          <br>
+          TCP/UDP — определение протокола соединения.
+        </p>
+        <p>Для дальнейшей обработки данных предусмотрены стандартные библиотеки Python: csv и json для работы с форматами данных, argparse для аргументов командной строки, collections для подсчёта и группировки информации.</p>
+      </section>
+
+      <section class="detail-item detail-item--wide">
+        <h4>Вывод</h4>
+        <p>Практика позволила изучить основы Python-автоматизации и применение сторонних и стандартных библиотек для системного мониторинга. Python предоставляет возможность расширять функциональность скриптов, подключая дополнительные библиотеки под конкретные задачи информационной безопасности: анализ логов, обработку событий, работу с API, сетевой мониторинг и автоматизацию SOC-процессов.</p>
+      </section>
+
+    </div>
+    <span class="edit-note">Практическая работа: Python scripting, psutil и network monitoring automation.</span>
+  </div>
+</article>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="page-shell">SOC Practical Work · Журнал практических работ</div>
+  </footer>
+</body>
+</html>
