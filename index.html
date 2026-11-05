@@ -624,10 +624,133 @@
 </article>
         
 
+<!-- КАРТОЧКА 11 -->
+<article class="project-card">
+  <header class="project-header">
+    <span class="project-number">11</span>
+    <div>
+      <h3 class="project-title">Vulnerability Remediation — WinRAR CVE-2023-38831</h3>
+      <p class="project-summary">Обнаружение уязвимой версии WinRAR через Wazuh, изучение CVE и обновление программного обеспечения для устранения известной уязвимости.</p>
+    </div>
+  </header>
+
+  <figure class="screenshot-frame">
+    <a class="screenshot-link" href="11.png" target="_blank" rel="noopener">
+      <object class="screenshot-object" data="11.png" type="image/png" aria-label="Обнаружение CVE-2023-38831 и проверка обновлённой версии WinRAR">
+        <span class="screenshot-fallback">
+          <span class="placeholder-icon" aria-hidden="true">▧</span>
+          <span class="placeholder-title">Скриншот будет добавлен</span>
+          <span class="placeholder-path">11.png</span>
+        </span>
+      </object>
+    </a>
+    <figcaption class="image-caption">Обнаружение CVE-2023-38831 в Wazuh, изучение описания уязвимости и проверка версии WinRAR через PowerShell</figcaption>
+  </figure>
+
+  <div class="project-details">
+    <h4 class="details-heading">Описание работы</h4>
+
+    <div class="detail-grid">
+
+      <section class="detail-item">
+        <h4>Цель</h4>
+        <p>
+          Выявить уязвимое программное обеспечение на рабочей станции,
+          изучить сведения о CVE-2023-38831 и устранить уязвимость
+          путём обновления WinRAR до актуальной версии.
+        </p>
+      </section>
+
+      <section class="detail-item">
+        <h4>Среда</h4>
+        <p>
+          ОС: Windows 10 Home 22H2.<br>
+          SIEM: Wazuh 4.14.8.<br>
+          Агент: amal (ID 001).<br>
+          Уязвимое ПО: RARLAB WinRAR.<br>
+          Обнаруженная версия в Wazuh Inventory: 6.21.0.<br>
+          Проверенная версия файла WinRAR.exe: 7.23.0.<br>
+          CVE: CVE-2023-38831.
+        </p>
+      </section>
+
+      <section class="detail-item">
+        <h4>Инструменты</h4>
+        <p>
+          Wazuh Vulnerability Detection — обнаружение уязвимого ПО.<br>
+          Wazuh Inventory — просмотр сведений об установленных пакетах.<br>
+          Wazuh CTI — изучение информации об уязвимости.<br>
+          PowerShell — проверка версии исполняемого файла.<br>
+          CVE Database — изучение описания и характеристик CVE.
+        </p>
+      </section>
+
+      <section class="detail-item">
+        <h4>Процесс</h4>
+        <p>
+          1. В Wazuh Vulnerability Detection обнаружена запись
+          о WinRAR версии 6.21.0 с уязвимостью CVE-2023-38831.<br>
+          2. Изучено описание CVE и диапазон затронутых версий.<br>
+          3. Определено, что уязвимость затрагивает версии WinRAR
+          до 6.23.<br>
+          4. Выполнено обновление WinRAR до версии 7.23.0.<br>
+          5. Через PowerShell проверена версия файла WinRAR.exe
+          с использованием свойства VersionInfo.<br>
+          6. Полученный результат сопоставлен с информацией
+          из Wazuh Inventory.
+        </p>
+      </section>
+
+      <section class="detail-item detail-item--wide">
+        <h4>Анализ</h4>
+        <p>
+          CVE-2023-38831 — уязвимость WinRAR, позволяющая выполнить
+          произвольный код при попытке пользователя просмотреть
+          обычный файл внутри специально сформированного ZIP-архива.
+          Уязвимость затрагивает версии до 6.23.
+        </p>
+        <p>
+          В Wazuh Inventory обнаружена версия 6.21.0,
+          отмеченная как уязвимая. После обновления PowerShell
+          показал следующие значения:
+          <br>
+          ProductName: WinRAR.<br>
+          ProductVersion: 7.23.0.<br>
+          FileVersion: 7.23.0.
+        </p>
+        <p>
+          Таким образом, локальная проверка исполняемого файла
+          подтвердила наличие версии 7.23.0. При этом в отображённой
+          записи Wazuh Inventory ещё оставалась версия 6.21.0.
+          Для окончательного подтверждения устранения уязвимости
+          требуется обновлённая инвентаризация агента и проверка
+          статуса CVE в Wazuh.
+        </p>
+      </section>
+
+      <section class="detail-item detail-item--wide">
+        <h4>Вывод</h4>
+        <p>
+          Обнаружена и исследована уязвимость CVE-2023-38831
+          в WinRAR. Выполнено обновление программного обеспечения
+          до версии 7.23.0 и проверена версия исполняемого файла
+          через PowerShell. Практика позволила изучить процесс
+          Vulnerability Management: обнаружение уязвимости,
+          анализ CVE, обновление ПО и проверка результата
+          средствами SIEM.
+        </p>
+      </section>
+
+    </div>
+
+    <span class="edit-note">Практическая работа: обнаружение CVE, обновление уязвимого ПО и проверка результата.</span>
+  </div>
+</article>
+        
         <!-- КАРТОЧКА 04 -->
 <article class="project-card">
   <header class="project-header">
-    <span class="project-number">03</span>
+    <span class="project-number">04</span>
     <div>
       <h3 class="project-title">Custom Wazuh Detection Rule — Event ID 4625</h3>
       <p class="project-summary">Создание пользовательского правила для обнаружения неудачных попыток входа в Windows.</p>
@@ -742,7 +865,7 @@
         <!-- КАРТОЧКА 05 -->
 <article class="project-card">
   <header class="project-header">
-    <span class="project-number">04</span>
+    <span class="project-number">05</span>
     <div>
       <h3 class="project-title">Failed Logon Analysis (Event ID 4625)</h3>
       <p class="project-summary">Анализ неудачной попытки входа в Windows с использованием Wazuh SIEM и Windows Security Logs.</p>
@@ -809,7 +932,7 @@
 <!-- КАРТОЧКА 06 -->
 <article class="project-card">
   <header class="project-header">
-    <span class="project-number">05</span>
+    <span class="project-number">06</span>
     <div>
       <h3 class="project-title">Windows Security Configuration Assessment & Remediation</h3>
       <p class="project-summary">Проверка настроек безопасности Windows по CIS Benchmark и анализ параметров системной конфигурации.</p>
@@ -878,7 +1001,7 @@
 <!-- КАРТОЧКА 07 -->
 <article class="project-card">
   <header class="project-header">
-    <span class="project-number">06</span>
+    <span class="project-number">07</span>
     <div>
       <h3 class="project-title">MITRE ATT&amp;CK Framework Analysis</h3>
       <p class="project-summary">Изучение тактик и техник MITRE ATT&amp;CK и их применение при анализе событий безопасности в Wazuh.</p>
@@ -938,7 +1061,7 @@
   <!-- КАРТОЧКА 08 -->
 <article class="project-card">
   <header class="project-header">
-    <span class="project-number">07</span>
+    <span class="project-number">08</span>
     <div>
       <h3 class="project-title">Windows Registry &amp; Audit Policy Analysis</h3>
       <p class="project-summary">Изучение реестра Windows и настройка политик аудита для мониторинга системных событий.</p>
@@ -1081,7 +1204,7 @@
  <!-- КАРТОЧКА 10 -->
 <article class="project-card">
   <header class="project-header">
-    <span class="project-number">9</span>
+    <span class="project-number">10</span>
     <div>
       <h3 class="project-title">Network Monitoring Automation with Python</h3>
       <p class="project-summary">Разработка Python-скрипта для автоматизированного сбора и обработки информации о сетевых интерфейсах, соединениях и процессах.</p>
