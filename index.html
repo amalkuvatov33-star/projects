@@ -627,7 +627,7 @@
 <!-- КАРТОЧКА 11 -->
 <article class="project-card">
   <header class="project-header">
-    <span class="project-number">11</span>
+    <span class="project-number">3</span>
     <div>
       <h3 class="project-title">Vulnerability Remediation — WinRAR CVE-2023-38831</h3>
       <p class="project-summary">Обнаружение уязвимой версии WinRAR через Wazuh, изучение CVE и обновление программного обеспечения для устранения известной уязвимости.</p>
@@ -1272,6 +1272,131 @@
   </div>
 </article>
 
+        <!-- КАРТОЧКА 12 -->
+<article class="project-card">
+  <header class="project-header">
+    <span class="project-number">12</span>
+    <div>
+      <h3 class="project-title">PowerShell SOC Automation — Failed Logon Analyzer</h3>
+      <p class="project-summary">Автоматизация первичного анализа неудачных попыток входа Windows Event ID 4625 с помощью PowerShell.</p>
+    </div>
+  </header>
+
+  <figure class="screenshot-frame">
+    <a class="screenshot-link" href="12.png" target="_blank" rel="noopener">
+      <object class="screenshot-object" data="12.png" type="image/png" aria-label="Результат работы PowerShell SOC-4625-Triage">
+        <span class="screenshot-fallback">
+          <span class="placeholder-icon" aria-hidden="true">▧</span>
+          <span class="placeholder-title">Скриншот будет добавлен</span>
+          <span class="placeholder-path">12.png</span>
+        </span>
+      </object>
+    </a>
+    <figcaption class="image-caption">Выполнение PowerShell-скрипта SOC-4625-Triage.ps1 и формирование CSV-отчёта по событиям неудачной аутентификации</figcaption>
+  </figure>
+
+  <div class="project-details">
+    <h4 class="details-heading">Описание работы</h4>
+
+    <div class="detail-grid">
+
+      <section class="detail-item">
+        <h4>Цель</h4>
+        <p>
+          Разработать PowerShell-скрипт для автоматизации первичного
+          анализа Windows Security Event ID 4625. Сократить ручную
+          обработку событий и упростить поиск повторяющихся
+          неудачных попыток аутентификации.
+        </p>
+      </section>
+
+      <section class="detail-item">
+        <h4>Среда</h4>
+        <p>
+          ОС: Windows 10 Home 22H2.<br>
+          Источник данных: Windows Security Log.<br>
+          Событие: Event ID 4625.<br>
+          Период анализа: последние 24 часа.<br>
+          Скрипт: SOC-4625-Triage.ps1.
+        </p>
+      </section>
+
+      <section class="detail-item">
+        <h4>Инструменты</h4>
+        <p>
+          PowerShell — автоматизация анализа.<br>
+          Get-WinEvent — получение событий Windows.<br>
+          XML — обработка структуры Event Data.<br>
+          PSCustomObject — формирование структурированных результатов.<br>
+          Group-Object — группировка попыток.<br>
+          Export-Csv — сохранение отчёта.<br>
+          Sort-Object и Format-Table — сортировка и отображение результатов.
+        </p>
+      </section>
+
+      <section class="detail-item">
+        <h4>Процесс</h4>
+        <p>
+          1. Создан PowerShell-скрипт SOC-4625-Triage.ps1.<br>
+          2. Настроен поиск событий Event ID 4625 в журнале Security
+          за последние 24 часа.<br>
+          3. Реализовано извлечение XML Event Data.<br>
+          4. Извлечены поля Username, SourceIP, Workstation,
+          LogonType, Status и SubStatus.<br>
+          5. Результаты преобразованы в структурированные объекты.<br>
+          6. Реализованы сортировка событий и группировка
+          комбинаций IP-адресов и пользователей.<br>
+          7. Результаты сохранены в CSV-файл
+          SOC-4625-Report.csv.
+        </p>
+      </section>
+
+      <section class="detail-item detail-item--wide">
+        <h4>Анализ</h4>
+        <p>
+          При тестовом запуске скрипт обнаружил одну неудачную
+          попытку входа:
+          <br>
+          Event ID: 4625.<br>
+          TimeCreated: 04.11.2026 19:48:06.<br>
+          Username: не указан в извлечённых данных.<br>
+          SourceIP: 127.0.0.1.<br>
+          LogonType: 2.
+        </p>
+        <p>
+          Скрипт также вывел группировку попыток по IP-адресу
+          и имени пользователя. Для обнаруженной записи получена
+          комбинация 127.0.0.1 | - с количеством 1.
+        </p>
+        <p>
+          Сформирован CSV-отчёт:
+          SOC-4625-Report.csv.
+          Его можно использовать для дальнейшего изучения
+          событий и документирования результатов анализа.
+        </p>
+      </section>
+
+      <section class="detail-item detail-item--wide">
+        <h4>Вывод</h4>
+        <p>
+          Разработан и протестирован PowerShell-скрипт для
+          автоматизированного сбора и первичной обработки
+          событий Windows Security Event ID 4625.
+          Получен практический опыт работы с Windows Event Logs,
+          XML, структурированными объектами PowerShell,
+          группировкой данных и экспортом CSV.
+          Скрипт демонстрирует возможность автоматизировать
+          повторяющиеся задачи SOC L1 и расширять их функциональность
+          дополнительными модулями и библиотеками.
+        </p>
+      </section>
+
+    </div>
+
+    <span class="edit-note">Практическая работа: PowerShell scripting, Windows Event Log analysis и SOC L1 automation.</span>
+  </div>
+</article>
+        
       </div>
     </section>
   </main>
