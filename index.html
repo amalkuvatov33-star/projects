@@ -580,12 +580,13 @@
 
 
  
+
 <article class="project-card">
   <header class="project-header">
     <span class="project-number">03</span>
     <div>
-      <h3 class="project-title">SIEM Splunk — Windows Event Collection & Monitoring</h3>
-      <p class="project-summary">Развёртывание Splunk Enterprise, подключение Windows Universal Forwarder, сбор и фильтрация событий безопасности Windows.</p>
+      <h3 class="project-title">SIEM Splunk — Windows Event Monitoring</h3>
+      <p class="project-summary">Подключение Windows к Splunk, сбор и фильтрация событий безопасности.</p>
     </div>
   </header>
 
@@ -599,7 +600,7 @@
         </span>
       </object>
     </a>
-    <figcaption class="image-caption">Сбор Windows Security Events и анализ Event ID в Splunk Enterprise</figcaption>
+    <figcaption class="image-caption">Windows Security Events в Splunk Enterprise</figcaption>
   </figure>
 
   <div class="project-details">
@@ -608,56 +609,51 @@
 
       <section class="detail-item">
         <h4>Цель</h4>
-        <p>Развернуть собственную SIEM-систему Splunk, подключить Windows-компьютер и настроить централизованный сбор событий. Научиться отслеживать активность системы, анализировать Event ID и ограничивать поступление ненужных событий.</p>
+        <p>Настроить централизованный сбор Windows Events и освоить мониторинг событий через Splunk.</p>
       </section>
 
       <section class="detail-item">
         <h4>Среда</h4>
         <p>
-          ОС сервера: Ubuntu Linux.<br>
-          ОС источника: Windows 10 Home 22H2.<br>
+          ОС: Ubuntu / Windows 10 Home 22H2.<br>
           SIEM: Splunk Enterprise.<br>
           Forwarder: Splunk Universal Forwarder.<br>
-          Windows Hostname: Denis.<br>
           Индекс: main.<br>
-          Виртуализация: Oracle VirtualBox.<br>
-          Передача событий: TCP 9997.<br>
-          Splunk Web: TCP 8000.
+          Виртуализация: VirtualBox.
         </p>
       </section>
 
       <section class="detail-item">
         <h4>Инструменты</h4>
         <p>
-          Splunk Enterprise — централизованный сбор и анализ событий.<br>
-          Splunk Universal Forwarder — передача Windows Event Logs.<br>
-          VirtualBox — настройка сетевого подключения виртуальной машины.<br>
-          Ubuntu Terminal — проверка IP-адреса и сетевых портов.<br>
-          PowerShell — настройка Forwarder и проверка соединения.<br>
-          SPL — поиск, фильтрация и статистический анализ событий.<br>
-          inputs.conf / outputs.conf — настройка источников и получателя данных.
+          Splunk Enterprise — анализ событий.<br>
+          Universal Forwarder — передача журналов.<br>
+          PowerShell — проверка соединения и настройка.<br>
+          SPL — поиск и фильтрация.<br>
+          inputs.conf / outputs.conf — конфигурация сбора данных.
         </p>
       </section>
 
       <section class="detail-item">
         <h4>Процесс</h4>
-        <p>Настроил сетевое подключение Ubuntu в VirtualBox и проверил адрес сервера через ip a. В outputs.conf исправил адрес получателя с устаревшего IP 192.168.1.6 на актуальный 192.168.1.9. Проверил доступность TCP 9997 из Windows через Test-NetConnection. Настроил сбор Security, System и Application через inputs.conf. Проверил итоговые параметры с помощью btool и настроил whitelist для отбора нужных Security Event ID.</p>
+        <p>Настроил сетевое подключение Ubuntu, исправил IP сервера в outputs.conf, подключил Windows Forwarder и настроил сбор Security, System и Application.</p>
       </section>
 
       <section class="detail-item detail-item--wide">
         <h4>Анализ</h4>
-        <p>Проверил поступление данных с Windows-хоста Denis через SPL-запросы. За один из периодов анализа Splunk обнаружил более 12 900 событий. Основной объём пришёлся на Security. Среди наиболее частых событий были 5379 (8 727), 4688 (1 882), 4689 (1 634), 4624 (181) и 4672 (169). Обнаружил большой поток обращений к Windows Credential Manager (5379) и завершений процессов (4689). Изучил их частоту и настроил фильтрацию на этапе сбора, чтобы уменьшить объём индексируемых данных. Дополнительно разобрал поиск событий и режим Real-Time Search.</p>
+        <p>Исследовал более 12 900 событий, определил наиболее частые Event ID и настроил whitelist для сокращения ненужного сбора.</p>
       </section>
 
       <section class="detail-item detail-item--wide">
         <h4>Вывод</h4>
-        <p>Развернул и настроил Splunk Enterprise в виртуальной среде, подключил Windows через Universal Forwarder и проверил передачу событий по сети. Научился работать с inputs.conf, outputs.conf и btool, анализировать распределение Event ID с помощью SPL и ограничивать сбор лишних событий. Получил практический опыт построения централизованного мониторинга Windows-журналов для задач SOC L1.</p>
+        <p>Получил практический опыт настройки Splunk, передачи Windows Events, работы с SPL и фильтрации событий для SOC L1 мониторинга.</p>
       </section>
 
     </div>
     <span class="edit-note">Практическая работа выполнена в собственной лабораторной среде.</span>
   </div>
 </article>
+
 
 
         
