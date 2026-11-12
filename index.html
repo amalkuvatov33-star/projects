@@ -576,12 +576,96 @@
     <span class="edit-note">Практическая работа выполнена в собственной лабораторной среде.</span>
   </div>
 </article>
+
+
+
+ 
+<article class="project-card">
+  <header class="project-header">
+    <span class="project-number">03</span>
+    <div>
+      <h3 class="project-title">SIEM Splunk — Windows Event Collection & Monitoring</h3>
+      <p class="project-summary">Развёртывание Splunk Enterprise, подключение Windows Universal Forwarder, сбор и фильтрация событий безопасности Windows.</p>
+    </div>
+  </header>
+
+  <figure class="screenshot-frame">
+    <a class="screenshot-link" href="00.png" target="_blank" rel="noopener">
+      <object class="screenshot-object" data="00.png" type="image/png" aria-label="Мониторинг Windows Events в Splunk">
+        <span class="screenshot-fallback">
+          <span class="placeholder-icon" aria-hidden="true">▧</span>
+          <span class="placeholder-title">Скриншот будет добавлен</span>
+          <span class="placeholder-path">00.png</span>
+        </span>
+      </object>
+    </a>
+    <figcaption class="image-caption">Сбор Windows Security Events и анализ Event ID в Splunk Enterprise</figcaption>
+  </figure>
+
+  <div class="project-details">
+    <h4 class="details-heading">Описание работы</h4>
+    <div class="detail-grid">
+
+      <section class="detail-item">
+        <h4>Цель</h4>
+        <p>Развернуть собственную SIEM-систему Splunk, подключить Windows-компьютер и настроить централизованный сбор событий. Научиться отслеживать активность системы, анализировать Event ID и ограничивать поступление ненужных событий.</p>
+      </section>
+
+      <section class="detail-item">
+        <h4>Среда</h4>
+        <p>
+          ОС сервера: Ubuntu Linux.<br>
+          ОС источника: Windows 10 Home 22H2.<br>
+          SIEM: Splunk Enterprise.<br>
+          Forwarder: Splunk Universal Forwarder.<br>
+          Windows Hostname: Denis.<br>
+          Индекс: main.<br>
+          Виртуализация: Oracle VirtualBox.<br>
+          Передача событий: TCP 9997.<br>
+          Splunk Web: TCP 8000.
+        </p>
+      </section>
+
+      <section class="detail-item">
+        <h4>Инструменты</h4>
+        <p>
+          Splunk Enterprise — централизованный сбор и анализ событий.<br>
+          Splunk Universal Forwarder — передача Windows Event Logs.<br>
+          VirtualBox — настройка сетевого подключения виртуальной машины.<br>
+          Ubuntu Terminal — проверка IP-адреса и сетевых портов.<br>
+          PowerShell — настройка Forwarder и проверка соединения.<br>
+          SPL — поиск, фильтрация и статистический анализ событий.<br>
+          inputs.conf / outputs.conf — настройка источников и получателя данных.
+        </p>
+      </section>
+
+      <section class="detail-item">
+        <h4>Процесс</h4>
+        <p>Настроил сетевое подключение Ubuntu в VirtualBox и проверил адрес сервера через ip a. В outputs.conf исправил адрес получателя с устаревшего IP 192.168.1.6 на актуальный 192.168.1.9. Проверил доступность TCP 9997 из Windows через Test-NetConnection. Настроил сбор Security, System и Application через inputs.conf. Проверил итоговые параметры с помощью btool и настроил whitelist для отбора нужных Security Event ID.</p>
+      </section>
+
+      <section class="detail-item detail-item--wide">
+        <h4>Анализ</h4>
+        <p>Проверил поступление данных с Windows-хоста Denis через SPL-запросы. За один из периодов анализа Splunk обнаружил более 12 900 событий. Основной объём пришёлся на Security. Среди наиболее частых событий были 5379 (8 727), 4688 (1 882), 4689 (1 634), 4624 (181) и 4672 (169). Обнаружил большой поток обращений к Windows Credential Manager (5379) и завершений процессов (4689). Изучил их частоту и настроил фильтрацию на этапе сбора, чтобы уменьшить объём индексируемых данных. Дополнительно разобрал поиск событий и режим Real-Time Search.</p>
+      </section>
+
+      <section class="detail-item detail-item--wide">
+        <h4>Вывод</h4>
+        <p>Развернул и настроил Splunk Enterprise в виртуальной среде, подключил Windows через Universal Forwarder и проверил передачу событий по сети. Научился работать с inputs.conf, outputs.conf и btool, анализировать распределение Event ID с помощью SPL и ограничивать сбор лишних событий. Получил практический опыт построения централизованного мониторинга Windows-журналов для задач SOC L1.</p>
+      </section>
+
+    </div>
+    <span class="edit-note">Практическая работа выполнена в собственной лабораторной среде.</span>
+  </div>
+</article>
+
+
         
 
 <!-- КАРТОЧКА 11 -->
 <article class="project-card">
   <header class="project-header">
-    <span class="project-number">3</span>
+    <span class="project-number">4</span>
     <div>
       <h3 class="project-title">Vulnerability Remediation — WinRAR CVE-2023-38831</h3>
       <p class="project-summary">Обнаружение уязвимой версии WinRAR через Wazuh, изучение CVE и обновление программного обеспечения для устранения известной уязвимости.</p>
@@ -665,7 +749,7 @@
         <!-- КАРТОЧКА 04 -->
 <article class="project-card">
   <header class="project-header">
-    <span class="project-number">04</span>
+    <span class="project-number">05</span>
     <div>
       <h3 class="project-title">Custom Wazuh Detection Rule — Event ID 4625</h3>
       <p class="project-summary">Создание пользовательского правила для обнаружения неудачных попыток входа в Windows.</p>
@@ -744,7 +828,7 @@
         <!-- КАРТОЧКА 05 -->
 <article class="project-card">
   <header class="project-header">
-    <span class="project-number">05</span>
+    <span class="project-number">06</span>
     <div>
       <h3 class="project-title">Failed Logon Analysis (Event ID 4625)</h3>
       <p class="project-summary">Анализ неудачной попытки входа в Windows с использованием Wazuh SIEM и Windows Security Logs.</p>
@@ -811,7 +895,7 @@
 <!-- КАРТОЧКА 06 -->
 <article class="project-card">
   <header class="project-header">
-    <span class="project-number">06</span>
+    <span class="project-number">07</span>
     <div>
       <h3 class="project-title">Windows Security Configuration Assessment & Remediation</h3>
       <p class="project-summary">Проверка настроек безопасности Windows по CIS Benchmark и анализ параметров системной конфигурации.</p>
@@ -878,7 +962,7 @@
 <!-- КАРТОЧКА 07 -->
 <article class="project-card">
   <header class="project-header">
-    <span class="project-number">07</span>
+    <span class="project-number">08</span>
     <div>
       <h3 class="project-title">MITRE ATT&amp;CK Framework Analysis</h3>
       <p class="project-summary">Изучение тактик и техник MITRE ATT&amp;CK и их применение при анализе событий безопасности в Wazuh.</p>
@@ -938,7 +1022,7 @@
   <!-- КАРТОЧКА 08 -->
 <article class="project-card">
   <header class="project-header">
-    <span class="project-number">08</span>
+    <span class="project-number">09</span>
     <div>
       <h3 class="project-title">Windows Registry &amp; Audit Policy Analysis</h3>
       <p class="project-summary">Изучение реестра Windows и настройка политик аудита для мониторинга системных событий.</p>
@@ -1014,7 +1098,7 @@
 <!-- КАРТОЧКА 09 -->
 <article class="project-card">
   <header class="project-header">
-    <span class="project-number">09</span>
+    <span class="project-number">10</span>
     <div>
       <h3 class="project-title">Wazuh SIEM Administration via Linux</h3>
       <p class="project-summary">Управление компонентами Wazuh SIEM через Linux: контроль служб, ресурсов системы и конфигурационных файлов.</p>
@@ -1081,7 +1165,7 @@
  <!-- КАРТОЧКА 10 -->
 <article class="project-card">
   <header class="project-header">
-    <span class="project-number">10</span>
+    <span class="project-number">11</span>
     <div>
       <h3 class="project-title">Network Monitoring Automation with Python</h3>
       <p class="project-summary">Разработка Python-скрипта для автоматизированного сбора и обработки информации о сетевых интерфейсах, соединениях и процессах.</p>
